@@ -1,0 +1,105 @@
+@font-face {
+    font-family: 'Theme';
+    src: url('./ALDI-REGULAR.OTF') format('truetype');
+}
+@font-face {
+    font-family: 'Theme_Chs';
+    src: url('./方正粗金陵繁体.TTF') format('truetype');
+}
+body {
+    font-family: 'Theme', 'Theme_Chs';
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 87vh;
+    background-color: #fff;
+    transition: opacity 1s ease-in-out;
+}
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+button {
+    font-family: 'Theme', 'Theme_Chs';
+    width: 100px;
+    height: 70px;
+    font-size: 20px;
+    margin: 12px;
+    cursor: pointer;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+#dealer-cards {
+    display: flex;
+    justify-content: center;
+}
+#dealer-cards img, #your-cards img{
+    height:175px;
+    width:125px;
+    margin:5px;
+}
+#hidden {
+    margin-right: 3px;
+}
+#hit, #stay {
+    font-family: 'Theme', 'Theme_Chs';
+    width:80px;
+    height:40px;
+    font-size:20px;
+}
+#refresh {
+    font-family: 'Theme', 'Theme_Chs';
+    width:120px;
+    height:40px;
+    font-size:20px;
+}
+#results {
+    position: absolute;
+    top: 82%; /* 根据需要调整，确保消息在屏幕下方显示 */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-family: 'Theme', 'Theme_Chs';
+    color: #333;
+}
+#toggleIcon {
+    position: fixed;
+    top: 30px;
+    right: 50px;
+    width: 70px;
+    height: 70px;
+    background: #fff url('./close-outline.jpg') no-repeat center;
+    background-size: 50px 50px;
+    z-index: 1;
+    cursor: pointer;
+}
+#toggleIconTips {
+    position: fixed;
+    top: 30px;
+    left: 50px;
+    width: 70px;
+    height: 70px;
+    background: #fff url('./tips.jpg') no-repeat center;
+    background-size: 50px 50px;
+    z-index: 1;
+    cursor: pointer;
+}
+#toggleIcon, #toggleIconTips{
+    transition: opacity 1s ease-in-out;
+}
+.fade-out{
+    opacity: 0;
+}
+.fade-in{
+    opacity: 1;
+}
