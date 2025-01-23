@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="./Formal_Page_1.css">
+    <title>Page</title>
+</head>
+<body>
+    <div class="search-box">
+        <input class="search-txt" type="text" placeholder="Type to search">
+        <a href="#" class="search-btn">
+          <ion-icon name="search" class="icon"></ion-icon>
+        </a>
+    </div>
+    <div id="toggleIcon" onclick="menuToggle()"></div>
+    <div id="menu-overlay">
+    <ul>
+        <li><a href='Formal_Page_1.html' class="menu-link">Home</a></li>
+        <li><a href='Game_Main.html' class="menu-link">Game</a></li>
+        <li><a href='Video_Gallery.html' class="menu-link">Video</a></li>
+        <li><a href='#' class="menu-link">Portfolio</a></li>
+        <li><a href='Contact.html' class="menu-link">Contact</a></li>
+    </ul>
+    </div>
+    <script type="text/javascript">
+        function menuToggle (){
+            var nav = document.getElementById('menu-overlay');
+            nav.classList.toggle('active');
+            var nav = document.getElementById('toggleIcon');
+            nav.classList.toggle('active');
+        }
+        const menuLinks = document.querySelectorAll('.menu-link');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetLink = e.target;
+                menuLinks.forEach(item => {
+                    item.classList.add('fade-out');
+                });
+                setTimeout(()=>{
+                    window.location.href = targetLink.getAttribute('href');
+                },300);
+            });
+        });
+        const searchInput = document.querySelector('.search-txt');
+        searchInput.addEventListener('input',function(){
+            const minWidth = 220;
+            const currentWidth = searchInput.value.length * 5 + minWidth;
+            searchInput.style.width = currentWidth + 'px';
+        });
+        const searchBox = document.querySelector('.search-box');
+        searchBox.addEventListener('mouseenter', function(){
+            searchInput.style.width = '240px';
+        });
+        searchBox.addEventListener('mouseleave', function(){
+            if (!searchInput.value){
+                searchInput.style.width = '0px';
+            }
+        });
+    </script>
+</body>
+</html>
