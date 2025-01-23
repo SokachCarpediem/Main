@@ -1,0 +1,205 @@
+@font-face {
+    font-family: 'Theme';
+    src: url('./ALDI-REGULAR.OTF') format('truetype');
+}
+@font-face {
+    font-family: 'Theme_Chs';
+    src: url('./方正粗金陵繁体.TTF') format('truetype');
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Theme', "Theme_Chs";
+}
+body{
+    background: white;
+}
+.select-box, .play-board, .result-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+.select-box{
+    position: absolute;
+    padding: 20px 25px 25px;
+    border: 2px solid black;
+    border-radius: 5px;
+    max-width: 330px;
+    width: 100%;
+}
+.select-box.hide{
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.9);
+}
+.select-box header{
+    font-size: 24px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+.select-box .title{
+    font-size: 13px;
+    font-weight: 500;
+    margin: 20px 0;
+}
+.select-box .options{
+    display: flex;
+    width: 100%;
+}
+.options button{
+    width: 100%;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 0;
+    border: none;
+    outline: none;
+    background: white;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.options button:hover, .result-box .btn button:hover{
+    transform: scale(0.96);
+}
+.options button.playerX{
+    margin-right: 5px;
+}
+.options button.playerX{
+    margin-left: 5px;
+}
+.play-board {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.9);
+}
+.play-board.show{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+.play-board .details{
+    background: white;
+    padding: 7px;
+    border-radius: 5px;
+}
+.play-board .details .players{
+    display: flex;
+    width: 100%;
+    position:relative;
+    border: 2px solid black;
+    border-radius: 7px;
+}
+.play-board .details span{
+    width: 100%;
+    color: black;
+    border-radius: 5px;
+    padding: 7px 0;
+    font-size: 19px;
+    font-weight: 500;
+    cursor: default;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+    transition: all 0.3s ease;
+}
+.details span:first-child{
+    color:white;
+}
+.details .slider{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: black;
+    border-radius: 5px;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+.players.active span:first-child{
+    color:black;
+}
+.players.active span:nth-child(2){
+    color:white;
+}
+.players.active .slider{
+    left: 50%;
+}
+.play-board .play-area{
+    margin-top: 20px;
+}
+.play-board section{
+    display: flex;
+}
+.play-board section span{
+    display: block;
+    margin: 2px;
+    height: 80px;
+    width: 80px;
+    background: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 40px;
+    text-align: center;
+    line-height: 77px;
+    color:black;
+}
+.result-box{
+    background:white;
+    padding:20px;
+    border-radius: 5px;
+    max-width: 350px;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.9);
+}
+.result-box.show{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+.result-box .won-text{
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+}
+.result-box .won-text p{
+    font-weight: 700;
+    margin: 0 9px;
+}
+.result-box .btn{
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+}
+.result-box .btn button{
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border: none;
+    outline: none;
+    background: white;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid black;
+}
+#toggleIcon {
+    position: fixed;
+    top: 30px;
+    right: 50px;
+    width: 70px;
+    height: 70px;
+    background: #fff url('./close-outline.jpg') no-repeat center;
+    background-size: 50px 50px;
+    z-index: 1;
+    cursor: pointer;
+}
