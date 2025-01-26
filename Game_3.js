@@ -8,6 +8,12 @@ const selectBox = document.querySelector('.select-box'),
     wonText = resultBox.querySelector('.won-text'),
     replayBtn = resultBox.querySelector('button');
 
+let playerXIcon = 'fas fa-times',
+    playerOIcon = 'far fa-circle',
+    playerSign = 'X',
+    runBot = true,
+    isPlayerX = true;
+
 window.onload = () => {
     for (let i = 0; i < allBox.length; i++) {
         allBox[i].setAttribute('onclick', 'clickedBox(this)');
@@ -15,18 +21,17 @@ window.onload = () => {
     SelectXBtn.onclick = () => {
         selectBox.classList.add('hide');
         playboard.classList.add('show');
+        isPlayerX = true;
+        players.classList.remove('active');
     }
     SelectOBtn.onclick = () => {
         selectBox.classList.add('hide');
         playboard.classList.add('show');
-        players.setAttribute('class', 'players active player');
+        isPlayerX = false;
+        players.classList.add('active');
     }
 }
 
-let playerXIcon = 'fas fa-times';
-let playerOIcon = 'far fa-circle';
-let playerSign = 'X';
-let runBot = true;
 
 const winCombos = [
     [1,2,3], [4,5,6], [7,8,9],
@@ -60,53 +65,43 @@ function getBestMove(currentSign) {
 }
 
 function clickedBox(element){
-    if(players.classList.contains('player')){
-        element.innerHTML = `<i class = '${playerOIcon}'></i>`;
+    if (!isPlayerX) {
+        element.innerHTML = `<i class='${playerOIcon}'></i>`;
         element.setAttribute('id', 'O');
-        
         players.classList.remove('active');
-        
         playerSign = 'O';
         selectWinner();
-        
         playboard.style.pointerEvents = 'none';
         element.style.pointerEvents = 'none';
-        
-        let randomDelayTime = ((Math.random() * 1000) + 200).toFixed();
         setTimeout(() => {
-            bot(runBot);
-            players.classList.add('active');
-        }, randomDelayTime);
-    }
-    else {
-        element.innerHTML = `<i class = '${playerXIcon}'></i>`;
+            bot();
+        }, ((Math.random() * 1000) + 200).toFixed());
+    } else {
+        element.innerHTML = `<i class='${playerXIcon}'></i>`;
         players.classList.add('active');
-        element.setAttribute('id', playerSign);
+        element.setAttribute('id', 'X');
+        playerSign = 'X';
         selectWinner();
         playboard.style.pointerEvents = 'none';
         element.style.pointerEvents = 'none';
-        let randomDelayTime = ((Math.random() * 1000) + 200).toFixed();
         setTimeout(() => {
-            bot(runBot);
-        }, randomDelayTime);
+            bot();
+        }, ((Math.random() * 1000) + 200).toFixed());
     }
 }
 
-function bot(runBot){
+function bot(){
     if(runBot){
-        const isBotX = players.classList.contains('player');
-        const botSign = isBotX ? 'X' : 'O';
-        
+        const botSign = isPlayerX ? 'O' : 'X';
         const bestMove = getBestMove(botSign);
-        
         if (bestMove !== undefined) {
             const icon = botSign === 'X' ? playerXIcon : playerOIcon;
             allBox[bestMove].innerHTML = `<i class='${icon}'></i>`;
             allBox[bestMove].setAttribute('id', botSign);
             allBox[bestMove].style.pointerEvents = 'none';
-            playerSign = botSign === 'X' ? 'O' : 'X';
+            if (isPlayerX) players.classList.remove('active');
+            else players.classList.add('active');
         }
-
         selectWinner();
         playboard.style.pointerEvents = 'auto';
     }
@@ -117,34 +112,33 @@ function getClass(idname){
 }
 
 function checkClass(val1, val2, val3, sign){
-    if(getClass(val1) == sign && getClass(val2) == sign && getClass(val3) == sign){
-        return true;
-    }
+    return (getClass(val1) === sign && getClass(val2) === sign && getClass(val3) === sign);
 }
 
 function selectWinner(){
-    if(checkClass(1,2,3, playerSign) || checkClass(4,5,6, playerSign) || checkClass(7,8,9, playerSign) || checkClass(1,4,7, playerSign) || checkClass(2,5,8, playerSign) || checkClass(3,6,9, playerSign) || checkClass(1,5,9, playerSign) || checkClass(3,5,7, playerSign)) {
+    let isXWin = winCombos.some(combo => 
+        combo.every(idx => getClass(idx) === 'X')
+    );
+    let isOWin = winCombos.some(combo => 
+        combo.every(idx => getClass(idx) === 'O')
+    );
+
+    if (isXWin || isOWin) {
+        const winner = isXWin ? 'X' : 'O';
         runBot = false;
-        bot(runBot);
         setTimeout(() => {
             playboard.classList.remove('show');
             resultBox.classList.add('show');
         }, 700);
-        wonText.innerHTML = `Player <p>${playerSign}</p> Won the Game!`;
-    }
-    else {
-        if(getClass(1) != '' && getClass(2) != '' && getClass(3) != '' && getClass(4) != '' && getClass(5) != '' && getClass(6) != '' && getClass(7) != '' && getClass(8) != '' && getClass(9) != ''){
-            runBot = false;
-            bot(runBot);
-            setTimeout(() => {
-                playboard.classList.remove('show');
-                resultBox.classList.add('show');
-            }, 700);
-            wonText.textContent = `Match has been drawn!`;
-        }
+        wonText.innerHTML = `Player <p>${winner}</p> Won the Game!`;
+    } else if ([...allBox].every(box => box.id !== '')) {
+        runBot = false;
+        setTimeout(() => {
+            playboard.classList.remove('show');
+            resultBox.classList.add('show');
+        }, 700);
+        wonText.textContent = `Match has been drawn!`;
     }
 }
 
-replayBtn.onclick = () => {
-    window.location.reload();
-}
+replayBtn.onclick = () => window.location.reload();
